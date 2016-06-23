@@ -22,7 +22,7 @@ QHash<quint32, QHash< QByteArray, QHash<QString, quint32 > > > UtilBackupMonitor
 
 UtilBackupMonitor::stateOfBackupDay::backupState UtilBackupMonitor::stateOfBackupDay::get(quint32 customerId, const QDate &date, bool refreshCache) {
 
-    QByteArray dateString = date.toString("yyyyMMdd").toAscii();
+    QByteArray dateString = date.toString("yyyyMMdd").toUtf8();
 
     /**
      * Existiert die angegebene Kundenid + Datum schon im Cache?
@@ -115,7 +115,7 @@ UtilBackupMonitor::stateOfBackupDay::backupState UtilBackupMonitor::stateOfBacku
 
 quint32 UtilBackupMonitor::stateOfBackupJob::get(quint32 customerId, const QString &jobName, jobType type, const QDate &date, bool refreshCache) {
 
-    QByteArray dateString = date.toString("yyyyMMdd").toAscii();
+    QByteArray dateString = date.toString("yyyyMMdd").toUtf8();
     QString jobNameCache = (type == JOB) ? "j_" + jobName : "g_" + jobName;
 
     /**

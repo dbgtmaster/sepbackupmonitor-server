@@ -60,7 +60,7 @@ void MyLdap::deleteInstance() {
 
 void MyLdap::connect(const QString &hostname) {
 
-    _ld = ldap_init(hostname.toAscii().data(), 389);
+    _ld = ldap_init(hostname.toUtf8().data(), 389);
     _hostname = hostname;
 }
 
@@ -89,7 +89,7 @@ bool MyLdap::bind(const QString& bindDn, const QString& password) {
         authType = LDAP_AUTH_SIMPLE;
         logNotice("No binddn given, binding anonym...");
     }
-    if ( int rc = ldap_bind_s(_ld, bindDn.toAscii().data(), password.toAscii().data(), authType) ) {
+    if ( int rc = ldap_bind_s(_ld, bindDn.toUtf8().data(), password.toUtf8().data(), authType) ) {
 
         // Verbindung zum LDAP Server fehlgeschlagen:
         logFatal("MyLdap::bind(): Bind to LDAP-host '%1', DN '%2' failed. Error: %3", _hostname, bindDn, err2String(rc));
@@ -115,7 +115,7 @@ QSharedPointer<MyLdapResult> MyLdap::search(const QString& dn, int scope, const 
 
     logNotice("Run ldapsearch: dn: '%1', searchScope: '%2', filter: '%3'", dn, QString::number(scope), filter);
     LDAPMessage *res;    // Ergebnis
-    int rc = ldap_search_s(_ld, dn.toAscii().data(), scope, filter.toAscii().data(), NULL, 0, &res );
+    int rc = ldap_search_s(_ld, dn.toUtf8().data(), scope, filter.toUtf8().data(), NULL, 0, &res );
 
     MyLdapResult* r = new MyLdapResult(this, res);
 
@@ -227,7 +227,7 @@ QString MyLdap::escapeSearchFilter(const QString &toEscape) {
    int charCount = toEscape.size();
    for (int i = 0; i < charCount; i++) {
        logDebug(toEscape.at(i));
-       switch (toEscape.at(i).toAscii()) {
+       switch (toEscape.at(i).toUtf8()) {
            case '\\':
                escaped += "\\\\";
                break;
@@ -262,7 +262,7 @@ QString MyLdap::escapeDn(const QString& toEscape) {
    int charCount = toEscape.size();
    for (int i = 1; i <= charCount; i++) {
 
-       switch (toEscape.at(i).toAscii()) {
+       switch (toEscape.at(i).toUtf8()) {
            case '\\':
                escaped += "\\\\";
                break;

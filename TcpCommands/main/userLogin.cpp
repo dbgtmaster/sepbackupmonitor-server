@@ -94,7 +94,7 @@ QVariant TcpCommand_main_userLogin::exec() {
     /**
       * Alle Benutzerdaten vom LDAP- Baum auslesen...
       */
-    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_username").toAscii().data() );
+    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_username").toUtf8().data() );
     if (list->isEmpty() || list->first().isEmpty()) {
         logError("LDAP userdata not complete! Username- attribute '%1' is missing!",
                  config->get("auth_backend_ldap", "attribute_username") );
@@ -104,7 +104,7 @@ QVariant TcpCommand_main_userLogin::exec() {
     logDebug("LDAP userdata: username is '%1'", username);
 
     // LdapID vom LDAP auslesen:
-    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_unique_id").toAscii().data() );
+    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_unique_id").toUtf8().data() );
     if (list->isEmpty() || list->first().isEmpty()) {
         logError("LDAP userdata not complete! LdapID- attribute '%1' is missing!",
                  config->get("auth_backend_ldap", "attribute_unique_id") );
@@ -114,7 +114,7 @@ QVariant TcpCommand_main_userLogin::exec() {
     logDebug("LDAP userdata: ldapId is '%1'", ldapId);
 
     // Vornamen vom LDAP auslesen:
-    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_givenname").toAscii().data() );
+    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_givenname").toUtf8().data() );
     if (list->isEmpty() || list->first().isEmpty()) {
         logError("LDAP userdata not complete! GivenName- attribute '%1' is missing!",
                  config->get("auth_backend_ldap", "attribute_givenname") );
@@ -124,7 +124,7 @@ QVariant TcpCommand_main_userLogin::exec() {
     logDebug("LDAP userdata: givenName is '%1'", givenName);
 
     // Nachnamen vom LDAP auslesen:
-    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_surname").toAscii().data() );
+    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_surname").toUtf8().data() );
     if (list->isEmpty() || list->first().isEmpty()) {
         logError("LDAP userdata not complete! SurName- attribute '%1' is missing!",
                  config->get("auth_backend_ldap", "attribute_surname") );
@@ -134,7 +134,7 @@ QVariant TcpCommand_main_userLogin::exec() {
     logDebug("LDAP userdata: surName is '%1'", surName);
 
     // DisplayName vom LDAP auslesen:
-    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_displayname").toAscii().data() );
+    list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_displayname").toUtf8().data() );
     if (list->isEmpty() || list->first().isEmpty()) {
         logError("LDAP userdata not complete! DisplayName- attribute '%1' is missing!",
                  config->get("auth_backend_ldap", "attribute_displayname") );
@@ -144,7 +144,7 @@ QVariant TcpCommand_main_userLogin::exec() {
     logDebug("LDAP userdata: displayName is '%1'", displayName);
 
     // Mail- Adresse vom LDAP auslesen:
-    //list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_mail").toAscii().data() );
+    //list = userLdapAttributes->getValues( config->get("auth_backend_ldap", "attribute_mail").toUtf8().data() );
     //if (list->isEmpty() || list->first().isEmpty()) {
     //    logError("LDAP userdata not complete! Mail address- attribute '%1' is missing!",
     //             config->get("auth_backend_ldap", "attribute_mail"));

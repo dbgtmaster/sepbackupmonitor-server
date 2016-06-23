@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
     Logger* logger = Logger::instance();
 
     //logger->addAppender( new LoggerConsoleAppender(logger) );
-    logger->addAppender( new LoggerFileAppender(c->get("logging", "path").toAscii(), logger) );
+    logger->addAppender( new LoggerFileAppender(c->get("logging", "path").toUtf8(), logger) );
 
     logger->setLogLevel(static_cast<Logger::Categories>( c->get("logging", "level", "4").toInt()));
 

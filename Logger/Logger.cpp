@@ -50,7 +50,7 @@ QString Logger::prepareMsg(const QString &logLevel, const QString &msg) {
     return QString("%1 [%2] [%3]: %4")
             .arg(QDateTime::currentDateTime().toString(),
                  logLevel,
-                 QString::number(QThread::currentThreadId()),
+                 QString::number((long long) QThread::currentThreadId()),
                  msg
                 );
 }
