@@ -6,6 +6,12 @@ Desweiteren muss der Server mit einer statischen IP versehen werden.
 Zum bauen des sepbackupmonitor-server müssen folgende Pakete instaliert werden:
 apt-get install git qt5-default qt5-qmake make g++ libldap2-dev
 
+Wenn die postgresql Datenbank auf diesen Server installiert werden:
+apt-get install postgresql
+
+Wenn das HTTPs Interface zum synchroniseren der Clients auf diesem Server laufen soll, so auch Apache installieren:
+apt-get install apache2
+
 Jetzt checken wir den server aus und kompilieren diesen:
 mkdir /root/software
 cd /root/software
