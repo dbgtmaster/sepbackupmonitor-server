@@ -2,7 +2,7 @@
 
 #include <auto_ptr.h>
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QHostAddress>
 #include <QTime>
 
@@ -278,7 +278,7 @@ void TcpSocketThread::close() {
 void TcpSocketThread::deleteLater() {
 
     // Müssen das Objekt zum Hauptthread verschieben, ansonstne erhalten wir ein Memory Leah
-    moveToThread(QApplication::instance()->thread());
+    moveToThread(QCoreApplication::instance()->thread());
 
     logNotice("Client connection closed, destroy tcp socket thread...");
 

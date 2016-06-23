@@ -227,7 +227,7 @@ QString MyLdap::escapeSearchFilter(const QString &toEscape) {
    int charCount = toEscape.size();
    for (int i = 0; i < charCount; i++) {
        logDebug(toEscape.at(i));
-       switch (toEscape.at(i)) {
+       switch (toEscape.at(i).toLatin1()) {
            case '\\':
                escaped += "\\\\";
                break;
@@ -262,7 +262,7 @@ QString MyLdap::escapeDn(const QString& toEscape) {
    int charCount = toEscape.size();
    for (int i = 1; i <= charCount; i++) {
 
-       switch (toEscape.at(i).toUtf8()) {
+       switch (toEscape.at(i).toLatin1()) {
            case '\\':
                escaped += "\\\\";
                break;
