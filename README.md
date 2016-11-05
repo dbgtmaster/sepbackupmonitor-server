@@ -25,6 +25,6 @@ qmake && make
 Server Binary und Konfigurations- Datei kopieren:
 cp sepbackupmonitor-server /usr/local/bin/
 cp skel/server.ini /usr/local/etc/sepbackupmonitor/server.ini
+cp skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
 
-Die Konfigurationsdatei öffnen "/usr/local/etc/sepbackupmonitor/server.ini" öffnen.
-Platzhalter entsprechend ersetzen.
+Die Konfigurationsdatei öffnen "/usr/local/etc/sepbackupmonitor/server.ini" und entsprechend konfigurieren.
