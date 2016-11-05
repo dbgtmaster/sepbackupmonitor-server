@@ -12,10 +12,10 @@ Config* Config::_instance = 0;
 Config::Config() : _config(QSettings::IniFormat, QSettings::UserScope, "backupmonitor", "server")
 {
 
-    _file = new QFile("/etc/backupmonitor/server.ini");
+    _file = new QFile("/etc/sepbackupmonitor/server.ini");
     _file->open(QIODevice::ReadOnly);
     if (!_file->isReadable()) {
-        std::cout << "/etc/backupmonitor/server.ini is not readable!";
+        std::cout << "/etc/sepbackupmonitor/server.ini is not readable!";
         exit(1);
     }
 
