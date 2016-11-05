@@ -24,7 +24,20 @@ qmake && make
 
 Server Binary und Konfigurations- Datei kopieren:
 cp sepbackupmonitor-server /usr/local/bin/
+mkdir /usr/local/etc/sepbackupmonitor/;
 cp skel/server.ini /usr/local/etc/sepbackupmonitor/server.ini
 cp skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
 
+## Datenbank erstellen:
+cp skel/import.sql /tmp/;
+chown postgres /tmp/import.sql
+su postgres
+psql
+CREATE DATABASE sepbackupmonitor;
+\c sepbackupmonitor;
+\i /tmp/import.sql
+
 Die Konfigurationsdatei öffnen "/usr/local/etc/sepbackupmonitor/server.ini" und entsprechend konfigurieren.
+
+systemctl enable sepbackupmonitor-server.service
+systemctl start sepbackupmonitor-server.service

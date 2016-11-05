@@ -714,44 +714,41 @@ SELECT pg_catalog.setval('tcp_actions_id_seq', 35, true);
 -- Data for Name: tcp_actions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY tcp_actions (group_name, action_name, id, system_group_id) FROM stdin;
-main    userLogin   2   1
-main    connectTcp  4   1
-system  getAllSystemGroups  6   2
-system  saveTcpCommandsPermissions  7   2
-loggedInUser    getUserColumn   1   3
-main    serverVersion   3   3
-system  getAllTcpCommands   5   2
-backupMonitor   getCustomers    15  4
-customers   getCustomer 17  3
-customers   modCustomer 18  3
-customers   generateNewBackupMonitorKey 19  3
-backupMonitor   getJobs 20  4
-backupMonitor   getJob  21  4
-backupMonitor   getJobProtocol  22  4
-customers   search  16  3
-notifications   create  27  -1
-backupMonitor   getBackupStateOfDay 25  4
-system  serverStatistics    23  2
-backupMonitor   getCustomerGroups   28  4
-customers   customerEditable    31  3
-customers   removeCustomer  30  3
-backupMonitor   customerGroupMod    29  4
-backupMonitor   customerGroupDelete 32  4
-notifications   getLastMessages 26  1
-backupMonitor   getCustomerInterfaceAddress 33  4
-backupMonitor   getLog  34  4
-backupMonitor   createLog   35  4
-administration  testLDAPGroupMemberships    8   5
-administration  userGroupMod    9   5
-administration  getAllUserGroups    10  5
-administration  getUserGroup    11  5
-administration  modGroupToSystemgroupsMemberships   12  5
-administration  userGroupDelete 13  5
-administration  userGroupToSystemGroups 14  5
-loggedInUser    hasTcpPermission    24  3
-\.
-
+INSERT INTO tcp_actions VALUES ('main', 'userLogin', 2, 1);
+INSERT INTO tcp_actions VALUES ('main', 'connectTcp', 4, 1);
+INSERT INTO tcp_actions VALUES ('system', 'getAllSystemGroups', 6, 2);
+INSERT INTO tcp_actions VALUES ('system', 'saveTcpCommandsPermissions', 7, 2);
+INSERT INTO tcp_actions VALUES ('loggedInUser', 'getUserColumn', 1, 3);
+INSERT INTO tcp_actions VALUES ('main', 'serverVersion', 3, 3);
+INSERT INTO tcp_actions VALUES ('system', 'getAllTcpCommands', 5, 2);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getCustomers', 15, 4);
+INSERT INTO tcp_actions VALUES ('customers', 'getCustomer', 17, 3);
+INSERT INTO tcp_actions VALUES ('customers', 'modCustomer', 18, 3);
+INSERT INTO tcp_actions VALUES ('customers', 'generateNewBackupMonitorKey', 19, 3);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getJobs', 20, 4);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getJob', 21, 4);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getJobProtocol', 22, 4);
+INSERT INTO tcp_actions VALUES ('customers', 'search', 16, 3);
+INSERT INTO tcp_actions VALUES ('notifications', 'create', 27, -1);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getBackupStateOfDay', 25, 4);
+INSERT INTO tcp_actions VALUES ('system', 'serverStatistics', 23, 2);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getCustomerGroups', 28, 4);
+INSERT INTO tcp_actions VALUES ('customers', 'customerEditable', 31, 3);
+INSERT INTO tcp_actions VALUES ('customers', 'removeCustomer', 30, 3);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'customerGroupMod', 29, 4);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'customerGroupDelete', 32, 4);
+INSERT INTO tcp_actions VALUES ('notifications', 'getLastMessages', 26, 1);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getCustomerInterfaceAddress', 33, 4);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'getLog', 34, 4);
+INSERT INTO tcp_actions VALUES ('backupMonitor', 'createLog', 35, 4);
+INSERT INTO tcp_actions VALUES ('administration', 'testLDAPGroupMemberships', 8, 5);
+INSERT INTO tcp_actions VALUES ('administration', 'userGroupMod', 9, 5);
+INSERT INTO tcp_actions VALUES ('administration', 'getAllUserGroups', 10, 5);
+INSERT INTO tcp_actions VALUES ('administration', 'getUserGroup', 11, 5);
+INSERT INTO tcp_actions VALUES ('administration', 'modGroupToSystemgroupsMemberships', 12, 5);
+INSERT INTO tcp_actions VALUES ('administration', 'userGroupDelete', 13, 5);
+INSERT INTO tcp_actions VALUES ('administration', 'userGroupToSystemGroups', 14, 5);
+INSERT INTO tcp_actions VALUES ('loggedInUser', 'hasTcpPermission', 24, 3);
 
 --
 -- Name: system_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
@@ -764,10 +761,10 @@ SELECT pg_catalog.setval('system_groups_id_seq', 5, true);
 -- Data for Name: system_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY system_groups (id, name, description) FROM stdin;
-1   LoggedOff   Dies ist eine virtuelle Gruppe, daher sind keine Zuordnungen möglich!\nMitglied dieser Gruppe ist man, wenn man sich gegen den Tcp- Server noch nicht authentifiziert hat.
-2   InternalSysAdmin    Benutzer dieser Gruppe können auf Softwarespezifische Punkte zugreifen (Tcp- Aktions Rechteverwaltung,...). Benutzer nur in diese Gruppe hinzufügen, wenn man auch weiß, was man tut!
-3   UserAccount Diese stellt Funktionen dar, die jeder Account zur Funktionalität benötigt. Ist ein Benutzer nicht in dieser System Gruppe, ist die Funktionalität der Software <b>nicht</b> gewährleistet!
-4   BackupMonitor   Benutzer dieser Gruppe können auf den Backup- Monitor zugreifen.
-5   Software- Administration    Kann Administrative Software- Operationen ausführen.
-\.
+INSERT INTO system_groups VALUES (1, 'LoggedOff', 'Dies ist eine virtuelle Gruppe, daher sind keine Zuordnungen möglich!
+Mitglied dieser Gruppe ist man, wenn man sich gegen den Tcp- Server noch nicht authentifiziert hat.');
+INSERT INTO system_groups VALUES (2, 'InternalSysAdmin', 'Benutzer dieser Gruppe können auf Softwarespezifische Punkte zugreifen (Tcp- Aktions Rechteverwaltung,...). Benutzer nur in diese Gruppe hinzufügen, wenn man auch weiß, was man tut!');
+INSERT INTO system_groups VALUES (3, 'UserAccount', 'Diese stellt Funktionen dar, die jeder Account zur Funktionalität benötigt. Ist ein Benutzer nicht in dieser System Gruppe, ist die Funktionalität der Software <b>nicht</b> gewährleistet!');
+INSERT INTO system_groups VALUES (4, 'BackupMonitor', 'Benutzer dieser Gruppe können auf den Backup- Monitor zugreifen.');
+INSERT INTO system_groups VALUES (5, 'Software- Administration', 'Kann Administrative Software- Operationen ausführen.');
+
