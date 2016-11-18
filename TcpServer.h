@@ -14,7 +14,7 @@ public:
     explicit TcpServer(QObject *parent = 0);
 
     // ... um Anfragen in einem eigenen Thrad zu starten:
-    void incomingConnection(int handle);
+    void incomingConnection(qintptr handle);
 signals:
 
 public slots:

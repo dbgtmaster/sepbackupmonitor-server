@@ -38,7 +38,8 @@ QVariant TcpCommand_customers_search::exec() {
               << "backup_prospective_jobs_mon"
               << "backup_prospective_jobs_tue" << "backup_prospective_jobs_wed" << "backup_prospective_jobs_thu"
               << "backup_prospective_jobs_fri" << "backup_prospective_jobs_sat" << "backup_prospective_jobs_sun"
-              << "backup_last_hello" << "backup_sync_client_version" << "backup_group" << "date_last_log_entry";
+              << "backup_last_hello" << "backup_sync_client_version" << "backup_group" << "date_last_log_entry"
+              << "username_of_last_log_entry";
 
     if (filterCols.count() == 0) {
         logError("No filterCols set! Bye");
@@ -72,9 +73,10 @@ QVariant TcpCommand_customers_search::exec() {
 
     // Get the date of the last log entry?
     bool getDateLastLogEntry = false;
-    if (returnCols.contains("date_last_log_entry")) {
+    if (returnCols.contains("date_last_log_entry") || returnCols.contains("username_of_last_log_entry")) {
         getDateLastLogEntry = true;
         returnCols.removeAll("date_last_log_entry");
+        returnCols.removeAll("username_of_last_log_entry");
     }
 
     // Datenbank SQL zusammenbauen:
@@ -123,11 +125,14 @@ QVariant TcpCommand_customers_search::exec() {
 
         // Get last log entry for this customer
         if (getDateLastLogEntry) {
-            DatabaseQuery result = _db->query("SELECT date FROM backup_jobs_log "
-                                              " WHERE customerid = " + columns["id"].toString() + " ORDER BY date DESC LIMIT 1");
+            DatabaseQuery result = _db->query("SELECT u.username, l.date FROM backup_jobs_log AS l "
+                                              "LEFT JOIN users u on u.id = l.userid"
+                                              " WHERE l.customerid = " + columns["id"].toString() + " ORDER BY l.date DESC LIMIT 1");
             result.next();
             columns.insert("date_last_log_entry", result.row("date"));
+            columns.insert("username_of_last_log_entry", result.row("username"));
         }
+
         returnList.append(columns);
     }
 

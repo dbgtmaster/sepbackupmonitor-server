@@ -41,3 +41,35 @@ Die Konfigurationsdatei öffnen "/usr/local/etc/sepbackupmonitor/server.ini" und
 
 systemctl enable sepbackupmonitor-server.service
 systemctl start sepbackupmonitor-server.service
+
+Nun kann der SEPBackupmonitor-Client gestartet werden.
+Beim Login Fenster gibt es einen Button "Server konfigurieren". Dort kann entsprechend der SEPBackupmonitor-Server definiert werden. Per Default wird zum Hostnamen "sepbackupmonitor" verbunden. Wird ein entsprechender DNS Eintrag zeigend zum SEPBackupmonitor-Server angelegt, muss nichts weiter konfiguriert werden.
+
+Da derzeit kein Benutzer die Berechtigung hat, auf den Backupmonitor zuzugreifen, muss der BackupMonitor-Server mit einer speziellen Berechtigung gestartet werden, welche es einem Benutzer erlaubt, sich einzuloggen, damit die Grundkonfiguration vorgenommen werden kann.
+
+Dazu den Backupmonitor stoppen:
+systemctl stop sepbackupmonitor-server
+
+Und den Benutzer "Administrator" volle Rechte erlauben.
+/usr/local/bin/sepbackupmonitor-server --fullTcpPermissions Administrator
+
+Nun kann man sich mit dem Benutzer "Administator" in den SEPBackupmonitor Client einloggen.
+
+Nachdem man sich eingeloggt hat, wählt man in der Menüleiste "Administration -> Benutzergruppen" aus und klickt auf den Button "Neue Gruppe".
+
+Bei Gruppenname kann zB. "Users" eingegeben werden (muss nicht mit LDAP ident sein!).
+Bei "Zuordnung Systemgruppen" wird "UserAccount" und "BackupMonitor" ausgewählt.
+Reiter "Zuordnung Benutzer" auswählen. Dort muss definiert werden, welche Benutzer zugreifen dürfen.
+Als Beispiel:
+Benutzer der Gruppe "Backupmonitor" dürfen zugreifen (getestet mit Univention):
+LDAP Filter 1:
+- Basis DN: cn=Backupmonitor,cn=groups,dc=test,dc=intranet
+- Scope: Base
+- Suchfilter: memberUid=%1
+
+"Benutzer <-> Gruppen Zuordnung testen" klicken und einen Benutzer eingeben, welcher sich in dieser Gruppe befindet. Trifft kein Filter zu, bitte die LDAP Filter Konfiguration nochmals überprüfen.
+
+Nun kann der "sepbackupmonitor-server" auf der Commandline wieder gestoppt werden und via systemctl wieder gestartet:
+systemctl start sepbackupmonitor-server
+
+Nun ist der Login mit allen erlaubten Benutzern möglich!

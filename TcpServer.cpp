@@ -8,7 +8,7 @@ TcpServer::TcpServer(QObject *parent) :
 
 // Methode wird aufgerufen, wenn eine neue Eingehende Verbindung
 // verfügbar ist.
-void TcpServer::incomingConnection(int handle) {
+void TcpServer::incomingConnection(qintptr handle) {
 
     logNotice("New incoming connection...");
 

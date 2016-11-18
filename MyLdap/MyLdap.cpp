@@ -81,14 +81,7 @@ bool MyLdap::bind(const QString& bindDn, const QString& password) {
     // Am LDAP Server binden:
     logNotice("Bind with ldap-DN '%1'.", bindDn);
 
-    int authType;
-    if (bindDn.count() == 0) {
-        authType = LDAP_AUTH_SIMPLE;
-    }
-    else {
-        authType = LDAP_AUTH_SIMPLE;
-        logNotice("No binddn given, binding anonym...");
-    }
+    int authType = LDAP_AUTH_SIMPLE;
     if ( int rc = ldap_bind_s(_ld, bindDn.toUtf8().data(), password.toUtf8().data(), authType) ) {
 
         // Verbindung zum LDAP Server fehlgeschlagen:
