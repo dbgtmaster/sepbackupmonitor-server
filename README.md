@@ -4,7 +4,7 @@ Es wird von einener Neuinstallation eines Debian 8 Servers ausgegangen (Minimal-
 Desweiteren muss der Server mit einer statischen IP versehen werden.
 
 Zum Bauen des sepbackupmonitor-server müssen folgende Pakete instaliert werden:
-apt-get install git qt5-default qt5-qmake make g++ libldap2-dev
+apt-get install git qt5-default qt5-qmake make g++ libldap2-dev php5 php5-pgsql
 
 Wenn die postgresql Datenbank auf diesen Server installiert werden:
 apt-get install postgresql
@@ -27,6 +27,12 @@ cp sepbackupmonitor-server /usr/local/bin/
 mkdir /usr/local/etc/sepbackupmonitor/;
 cp skel/server.ini /usr/local/etc/sepbackupmonitor/server.ini
 cp skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
+
+Webinterface API:
+mkdir /usr/share/sepbackupmonitor-interface
+cp web/interface/public/* /usr/share/sepbackupmonitor-interface
+cp web/interface/sepbackupmonitor.conf /etc/apache2/conf-available/sepbackupmonitor.conf
+ln -s /etc/apache2/conf-available/sepbackupmonitor.conf /etc/apache2/conf-enabled/sepbackupmonitor.conf
 
 ## Datenbank erstellen:
 cp skel/import.sql /tmp/;

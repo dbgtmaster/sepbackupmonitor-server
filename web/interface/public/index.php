@@ -1,5 +1,7 @@
 <?php 
 require_once('config.php');
+require_once('Db.class.php');
+require_once('DbResult.class.php');
 
 define('PROTOCOL_PATH', '/var/lib/intranet-server/backup-protocols/');
 define('DISASTER_PATH', '/var/lib/intranet-server/disasters/');
@@ -8,7 +10,7 @@ define('PROTOCOL_LINES_PER_PAGE', 1000);		// Pro Protokollseite X Zeilen anzeige
 $customerid = (int) $_GET['customerid'];
 $customerkey = $_GET['customerkey'];
 
-$db = new Db($CONFIG['POSTGRES']['host']['0'], $CONFIG['POSTGRES']['user']['0'], $CONFIG['POSTGRES']['pass']['0'], 'intranet_neu');
+$db = new Db($CONFIG['database']['hostname'], $CONFIG['database']['username'], $CONFIG['database']['password'], $CONFIG['database']['database']);
 
 // Überprüfen, ob Kunde mit diesem KEY Daten übermitteln darf???
 $key = $db->escape($customerkey);
