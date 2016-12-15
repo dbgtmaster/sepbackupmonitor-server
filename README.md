@@ -30,9 +30,15 @@ cp skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
 
 Webinterface API:
 mkdir /usr/share/sepbackupmonitor-interface
-cp web/interface/public/* /usr/share/sepbackupmonitor-interface
+cp -R web/interface/public/* /usr/share/sepbackupmonitor-interface
 cp web/interface/sepbackupmonitor.conf /etc/apache2/conf-available/sepbackupmonitor.conf
 ln -s /etc/apache2/conf-available/sepbackupmonitor.conf /etc/apache2/conf-enabled/sepbackupmonitor.conf
+
+mkdir -p /var/lib/sepbackupmonitor-server/backup-protocols
+mkdir -p /var/lib/sepbackupmonitor-server/backup-disasters
+
+# Create sepbackupmonitor-syncer client
+sh /usr/local/share/sepbackupmonitor-interface/client/create_source_file.sh
 
 ## Datenbank erstellen:
 cp skel/import.sql /tmp/;

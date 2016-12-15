@@ -72,7 +72,7 @@ $errorOccurred = false;
 define('PROGRAM_VERSION', str_replace(array("\n", "\r", "\r\n"), "", file_get_contents(PROGRAM_PATH . "VERSION")) );
 define('BACKUP_BACKEND', 'Sesam');
 define('PATH', './');
-define('ARCHITECTURE', array_pop( explode(" ", php_uname()) ) );	// x86_46
+define('ARCHITECTURE', @array_pop( explode(" ", php_uname()) ) );	// x86_46
 								// ACHTUNG: Ich denke, auf Windows wird immer 64bit geliefert!
 								// Diese Konstante wird aber derzeit nur f�r Linux verwendet..
 define('SYNC_MAX_DAYS', 7);		// Bis zu wie viele Tage soll zurück synchronisiert werden?
@@ -115,7 +115,7 @@ if (!function_exists('gzcompress')) {
 function postHttp($url, $postData = array()) {
 
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL,'https://intranet.siedl.net/customer_interface/' . $url);
+	curl_setopt($ch, CURLOPT_URL, HTTP_URL . '/' . $url);
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -132,7 +132,7 @@ function postHttp($url, $postData = array()) {
 
 	$return = curl_exec($ch);
 	if ($return === false) {
-		die('HTTPS Request failed! Address: https://intranet.siedl.net/customer_interface/' . $url . ', Error message: ' . curl_error($ch));
+		die('HTTPS Request failed! Address: '. HTTP_URL .'/' . $url . ', Error message: ' . curl_error($ch));
 	}
 	curl_close($ch);
 

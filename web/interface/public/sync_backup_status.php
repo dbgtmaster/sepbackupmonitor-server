@@ -2,9 +2,10 @@
 require_once('config.php');
 require_once('Db.class.php');
 require_once('DbResult.class.php');
+require_once('BackupBackendEntry.class.php');
 
-define('PROTOCOL_PATH', '/var/lib/intranet-server/backup-protocols/');
-define('DISASTER_PATH', '/var/lib/intranet-server/disasters/');
+define('PROTOCOL_PATH', '/var/lib/sepbackupmonitor-server/backup-protocols/');
+define('DISASTER_PATH', '/var/lib/sepbackupmonitor-server/disasters/');
 define('PROTOCOL_LINES_PER_PAGE', 1000);		// Pro Protokollseite X Zeilen anzeigen.
 
 $customerid = (int) $_GET['customerid'];
@@ -25,17 +26,17 @@ if ($_GET['action'] == 'init') {
 	 * Dinge, die vor dem synchronisieren passieren...
 	 * Gibt zB. die aktuelle Version der siedl_client_syncer zurück...
 	 */
-	die( file_get_contents(PATH_ROOT . '/customer_backup_syncer/siedl_backupsyncer.VERSION') );
+	die( file_get_contents('client/sepbackupmonitor-syncer.VERSION') );
 }
 elseif ($_GET['action'] == 'get_newest_client') {
 	
 	// Überträgt zum Cient die neuerste Client- Version:
 	header('Content-Description: File Transfer');
 	header("Content-Type: application/x-tar");
-	header('Content-Length: ' . filesize(PATH_ROOT . '/customer_backup_syncer/siedl_backupsyncer.tar'));
-	header('Content-Disposition: attachment; filename=' . basename("siedl_backupsyncer.tar"));
+	header('Content-Length: ' . filesize('client/sepbackupmonitor-syncer.tar'));
+	header('Content-Disposition: attachment; filename=' . basename("sepbackupmonitor-syncer.tar"));
 	header("Content-Transfer-Encoding: binary");
-	die(file_get_contents(PATH_ROOT . '/customer_backup_syncer/siedl_backupsyncer.tar'));
+	die(file_get_contents('client/sepbackupmonitor-syncer.tar'));
 }
 elseif ($_GET['action'] == 'sync_job') {
 
@@ -43,7 +44,7 @@ elseif ($_GET['action'] == 'sync_job') {
 	 * Nun werden die übermittelten Daten verarbeitet:
 	 */
 	$entry = unserialize( bzdecompress( base64_decode($_POST['data']) ) );
-	
+
 	// Haben wir verarbeitbare Daten erhalten??
 	if ($entry === false) {
 		echo "ROW: {$_POST['data']}";
