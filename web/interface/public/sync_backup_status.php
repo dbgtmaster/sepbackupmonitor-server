@@ -212,9 +212,11 @@ elseif ($_GET['action'] == 'sync_protocol') {
 			}
 		}
 		
-		// Protokollseite schreiben:
+		// Protokollseite
 		$data = implode("\n", $lastProtocolPage);
-		file_put_contents($protocolFile . '_' . $pagesProt, gzcompress($data));
+		if (!file_put_contents($protocolFile . '_' . $pagesProt, gzcompress($data))) {
+			die("Cannot write to: " . $protocolFile . '_' . $pagesProt);
+		}
 		
 		// Wenn $protocolToAdd nun nicht leer ist, so haben wir das Limit des letzten Protokolls erreicht, und müssen
 		// in einer neuen Datei fortsetzen:

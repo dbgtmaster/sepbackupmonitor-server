@@ -1,21 +1,14 @@
 ﻿Installation SEP- Backupmonitor servers
+==
 
 Es wird von einener Neuinstallation eines Debian 8 Servers ausgegangen (Minimal- Installation ohne grafischer Oberfläche). Als Systemsprache wurde Englisch gewählt. 
 Desweiteren muss der Server mit einer statischen IP versehen werden.
 
 Zum Bauen des sepbackupmonitor-server müssen folgende Pakete instaliert werden:
-apt-get install git qt5-default qt5-qmake make g++ libldap2-dev php5 php5-pgsql
+apt-get install git qt5-default qt5-qmake make g++ libldap2-dev php5 php5-pgsql apache2 postgresql
 
-Wenn die postgresql Datenbank auf diesen Server installiert werden:
-apt-get install postgresql
-
-Wenn das HTTPs Interface zum synchroniseren der Clients auf diesem Server laufen soll, so auch Apache installieren:
-apt-get install apache2
-
-Jetzt checken wir den server aus und kompilieren diesen:
+Nun wird der sepbackupmonitor-server vom github ausgecheckt und kompiliert:
 =======
-sepbackupmonitor-server auschecken und kompilieren:
-
 mkdir /root/software
 cd /root/software
 git clone https://github.com/dbgtmaster/sepbackupmonitor-server
@@ -36,6 +29,7 @@ ln -s /etc/apache2/conf-available/sepbackupmonitor.conf /etc/apache2/conf-enable
 
 mkdir -p /var/lib/sepbackupmonitor-server/backup-protocols
 mkdir -p /var/lib/sepbackupmonitor-server/backup-disasters
+chown www-data.www-data /var/lib/sepbackupmonitor-server/ -R
 
 # Create sepbackupmonitor-syncer client
 sh /usr/local/share/sepbackupmonitor-interface/client/create_source_file.sh
@@ -48,16 +42,19 @@ psql
 CREATE DATABASE sepbackupmonitor;
 \c sepbackupmonitor;
 \i /tmp/import.sql
+\q
 
 Die Konfigurationsdatei öffnen "/usr/local/etc/sepbackupmonitor/server.ini" und entsprechend konfigurieren.
 
 systemctl enable sepbackupmonitor-server.service
 systemctl start sepbackupmonitor-server.service
 
-Nun kann der SEPBackupmonitor-Client gestartet werden.
-Beim Login Fenster gibt es einen Button "Server konfigurieren". Dort kann entsprechend der SEPBackupmonitor-Server definiert werden. Per Default wird zum Hostnamen "sepbackupmonitor" verbunden. Wird ein entsprechender DNS Eintrag zeigend zum SEPBackupmonitor-Server angelegt, muss nichts weiter konfiguriert werden.
+Nun kann der SEPBackupmonitor-Client auf einem PC gestartet werden. Dieser Client dient der Verwaltung der SEP- Server.
+Download: XXXX
 
-Da derzeit kein Benutzer die Berechtigung hat, auf den Backupmonitor zuzugreifen, muss der BackupMonitor-Server mit einer speziellen Berechtigung gestartet werden, welche es einem Benutzer erlaubt, sich einzuloggen, damit die Grundkonfiguration vorgenommen werden kann.
+Beim Start des Clients wird beim Login- Fenster ein Button "Server konfigurieren" angezeigt. Dort kann der SEPBackupmonitor-Server definiert werden. Per Default wird eine Verbindung zum Server mit dem Hostnamen "sepbackupmonitor" angelegt. Wird ein entsprechender DNS Eintrag zeigend zum SEPBackupmonitor-Server angelegt, muss nichts weiter konfiguriert werden.
+
+Da derzeit kein Benutzer die Berechtigung hat, auf den BackupMonitor zuzugreifen, muss der BackupMonitor-Server mit einer speziellen Berechtigung gestartet werden, welche es einem Benutzer erlaubt, sich mit vollen Berechtigungen einzuloggen, damit die Grundkonfiguration vorgenommen werden kann.
 
 Dazu den Backupmonitor stoppen:
 systemctl stop sepbackupmonitor-server
@@ -66,12 +63,13 @@ Und den Benutzer "Administrator" volle Rechte erlauben.
 /usr/local/bin/sepbackupmonitor-server --fullTcpPermissions Administrator
 
 Nun kann man sich mit dem Benutzer "Administator" in den SEPBackupmonitor Client einloggen.
+Sollte ein Login nicht möglich sein, bitte am sepbackupserver die Konfigration überprüfen!
 
-Nachdem man sich eingeloggt hat, wählt man in der Menüleiste "Administration -> Benutzergruppen" aus und klickt auf den Button "Neue Gruppe".
+Nachdem man sich eingeloggt hat, wählt man oben in der Menüleiste "Administration -> Benutzergruppen" aus und klickt auf die Auswahl "Neue Gruppe".
 
 Bei Gruppenname kann zB. "Users" eingegeben werden (muss nicht mit LDAP ident sein!).
 Bei "Zuordnung Systemgruppen" wird "UserAccount" und "BackupMonitor" ausgewählt.
-Reiter "Zuordnung Benutzer" auswählen. Dort muss definiert werden, welche Benutzer zugreifen dürfen.
+Reiter "Zuordnung Benutzer" auswählen. Dort muss definiert werden, welche Benutzer den SEPBackupMonitor verwenden dürfen.
 Als Beispiel:
 Benutzer der Gruppe "Backupmonitor" dürfen zugreifen (getestet mit Univention):
 LDAP Filter 1:
@@ -85,3 +83,24 @@ Nun kann der "sepbackupmonitor-server" auf der Commandline wieder gestoppt werde
 systemctl start sepbackupmonitor-server
 
 Nun ist der Login mit allen erlaubten Benutzern möglich!
+
+Am Backupmonitor-client einloggen, auf "Kundenverwaltung" klicken und einen Kunden anlegen (in der server.ini muss bei der Sektion "customer" die Option "editable" aktiviert sein). Nun den eben angelegten Kunden öffnen, auf "Backupmonitor" klicken und dort auf den Button "Generiere neuen CUSTOMER_INTERFACE_KEY". Jetzt werden Zugangsdaten für die Synchronisierung des Kunden erzeugt.
+
+Am unteren Ende des Fensters wird ein Bash Befehl angezeigt, welcher auf den SEP- Server ausgeführt werden muss. Dieser Befehl installiert den Client zur Synchronisierung.
+Bevor der Befehl ausgeführt wird, muss überprüft werden, ob folgende Pakete am sepserver installiert sind:
+- php5
+- php5-pgsql (only for 64bit system)
+- php5-zlib
+- php5-bz2
+- php5-openssl
+- php5-curl
+
+Der Installer des Syncer- Clients fragt nach einer CustomerID sowie nach dem erzeugten CUSTOMER_INTERFACE_KEY. Nach erfolgter Installation wird automatisch ein Cron angelegt: "/etc/cron.hourly/sepbackupmonitor-syncer"
+Der sepbackupmontitor-syncer wird nach "/usr/local/lib/sepbackupmonitor-syncer" installiert.
+Nun erfolgt stündlich eine automatsche synchronisierung der Backup- Jobs.
+
+Im Backupmonitor-client kann unter "Backupmonitor" nun die synchronisierten Jobs betrachtet werden.
+Jetzt muss noch konfiguriert werden, wie viele Jobs täglich erwartet werden. Dazu einen Rechtsklick auf den Kunden, den Tab "Backupmonitor" auswählen. Bei den Einstellungen "Anzahl der zu erwartenden Jobs" werden die Anzahl der Jobs eintragen, welche mindestens pro Wochentag erwartet werden.
+
+
+Hilft & Support: http://www.siedl.net

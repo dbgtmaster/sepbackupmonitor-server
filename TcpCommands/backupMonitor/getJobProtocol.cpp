@@ -50,7 +50,7 @@ QVariant TcpCommand_backupMonitor_getJobProtocol::exec() {
     }
 
     // Pfad zum Protokoll generieren:
-    QString path = "/var/lib/intranet-server/backup-protocols/" + QString::number(jobId % 100) + "/" + QString::number(jobId % 99) + "/" + QString::number(jobId) + "_" + protocolTypeString;
+    QString path = "/var/lib/sepbackupmonitor-server/backup-protocols/" + QString::number(jobId % 100) + "/" + QString::number(jobId % 99) + "/" + QString::number(jobId) + "_" + protocolTypeString;
 
     QFile protocolFile(path + "_" + QString::number(protocolPage));
     protocolFile.open(QIODevice::ReadOnly);
