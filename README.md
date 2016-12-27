@@ -4,26 +4,29 @@
 Es wird von einener Neuinstallation eines Debian 8 Servers ausgegangen (Minimal- Installation ohne grafischer Oberfläche). Als Systemsprache wurde Englisch gewählt. 
 Desweiteren muss der Server mit einer statischen IP versehen werden.
 
-Zum Bauen des sepbackupmonitor-server müssen folgende Pakete instaliert werden:
+Zum Bauen des sepbackupmonitor-server müssen folgende Pakete installiert werden:
 ```
 apt-get install git qt5-default qt5-qmake make g++ libldap2-dev php5 php5-pgsql apache2 postgresql
 ```
 
 Nun wird der sepbackupmonitor-server vom github ausgecheckt und kompiliert:
-=======
+```
 mkdir /root/software
 cd /root/software
 git clone https://github.com/dbgtmaster/sepbackupmonitor-server
 cd sepbackupmonitor-server/
 qmake && make
-
-Server Binary und Konfigurations- Datei kopieren:
+```
+Server Binary und Konfigurations- Datei an den Ziel- Ort kopieren:
+```
 cp sepbackupmonitor-server /usr/local/bin/
 mkdir /usr/local/etc/sepbackupmonitor/;
 cp skel/server.ini /usr/local/etc/sepbackupmonitor/server.ini
 cp skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
+```
 
-Webinterface API:
+Konfiguration des Web- Interfaces:
+```
 mkdir /usr/share/sepbackupmonitor-interface
 cp -R web/interface/public/* /usr/share/sepbackupmonitor-interface
 cp web/interface/sepbackupmonitor.conf /etc/apache2/conf-available/sepbackupmonitor.conf
@@ -35,8 +38,10 @@ chown www-data.www-data /var/lib/sepbackupmonitor-server/ -R
 
 # Create sepbackupmonitor-syncer client
 sh /usr/local/share/sepbackupmonitor-interface/client/create_source_file.sh
+```
 
-## Datenbank erstellen:
+Nun wird das Grund- Schema der Datenbank importiert:
+```
 cp skel/import.sql /tmp/;
 chown postgres /tmp/import.sql
 su postgres
@@ -45,14 +50,19 @@ CREATE DATABASE sepbackupmonitor;
 \c sepbackupmonitor;
 \i /tmp/import.sql
 \q
+```
 
 Die Konfigurationsdatei öffnen "/usr/local/etc/sepbackupmonitor/server.ini" und entsprechend konfigurieren.
+Der Datenbank- Benutzername lautet "postgres", dass Passwort entspricht jenes des root- Benutzers.
 
+Backupmonitor-Server starten:
+```
 systemctl enable sepbackupmonitor-server.service
 systemctl start sepbackupmonitor-server.service
+```
 
 Nun kann der SEPBackupmonitor-Client auf einem PC gestartet werden. Dieser Client dient der Verwaltung der SEP- Server.
-Download: XXXX
+Download: https://github.com/dbgtmaster/sepbackupmonitor-client
 
 Beim Start des Clients wird beim Login- Fenster ein Button "Server konfigurieren" angezeigt. Dort kann der SEPBackupmonitor-Server definiert werden. Per Default wird eine Verbindung zum Server mit dem Hostnamen "sepbackupmonitor" angelegt. Wird ein entsprechender DNS Eintrag zeigend zum SEPBackupmonitor-Server angelegt, muss nichts weiter konfiguriert werden.
 
