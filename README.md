@@ -1,11 +1,13 @@
-﻿Installation SEP- Backupmonitor servers
+﻿Installation SEP- Backupmonitor Servers
 ==
 
 Es wird von einener Neuinstallation eines Debian 8 Servers ausgegangen (Minimal- Installation ohne grafischer Oberfläche). Als Systemsprache wurde Englisch gewählt. 
 Desweiteren muss der Server mit einer statischen IP versehen werden.
 
 Zum Bauen des sepbackupmonitor-server müssen folgende Pakete instaliert werden:
+```
 apt-get install git qt5-default qt5-qmake make g++ libldap2-dev php5 php5-pgsql apache2 postgresql
+```
 
 Nun wird der sepbackupmonitor-server vom github ausgecheckt und kompiliert:
 =======
