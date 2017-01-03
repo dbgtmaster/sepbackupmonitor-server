@@ -69,10 +69,14 @@ Beim Start des Clients wird beim Login- Fenster ein Button "Server konfigurieren
 Da derzeit kein Benutzer die Berechtigung hat, auf den BackupMonitor zuzugreifen, muss der BackupMonitor-Server mit einer speziellen Berechtigung gestartet werden, welche es einem Benutzer erlaubt, sich mit vollen Berechtigungen einzuloggen, damit die Grundkonfiguration vorgenommen werden kann.
 
 Dazu den Backupmonitor stoppen:
+```
 systemctl stop sepbackupmonitor-server
+```
 
 Und den Benutzer "Administrator" volle Rechte erlauben.
+```
 /usr/local/bin/sepbackupmonitor-server --fullTcpPermissions Administrator
+```
 
 Nun kann man sich mit dem Benutzer "Administator" in den SEPBackupmonitor Client einloggen.
 Sollte ein Login nicht möglich sein, bitte am sepbackupserver die Konfigration überprüfen!
