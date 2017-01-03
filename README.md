@@ -107,6 +107,8 @@ Bevor der Befehl ausgeführt wird, muss überprüft werden, ob folgende Pakete a
 - php5-openssl
 - php5-curl
 
+Vor der Installation muss verifiziert werden, ob der sepbackupmonitor-server von extern über Port 443 erreichbar ist. Sollte diese nicht der Fall sein, muss der Router / die Firewall entsprechend konfiguriert werden.
+
 Der Installer des Syncer- Clients fragt nach einer CustomerID sowie nach dem erzeugten CUSTOMER_INTERFACE_KEY. Nach erfolgter Installation wird automatisch ein Cron angelegt: "/etc/cron.hourly/sepbackupmonitor-syncer"
 Der sepbackupmontitor-syncer wird nach "/usr/local/lib/sepbackupmonitor-syncer" installiert.
 Nun erfolgt stündlich eine automatsche synchronisierung der Backup- Jobs.
