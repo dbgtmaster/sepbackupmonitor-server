@@ -3,7 +3,7 @@ Description=siedlbackupmonitor-server
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/siedlbackupmonitor-server
+ExecStart=/usr/local/bin/sepbackupmonitor-server
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 
