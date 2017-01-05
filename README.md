@@ -42,7 +42,7 @@ sh /usr/local/share/sepbackupmonitor-interface/client/create_source_file.sh
 
 Nun wird das Grund- Schema der Datenbank importiert:
 ```
-cp /root/software/sepbackupmonitor-server/web/interface/public/exitskel/import.sql /tmp/;
+cp /root/software/sepbackupmonitor-server/skel/import.sql /tmp/;
 chown postgres /tmp/import.sql
 su postgres
 psql
