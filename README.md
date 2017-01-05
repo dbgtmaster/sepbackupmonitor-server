@@ -27,8 +27,8 @@ cp /root/software/sepbackupmonitor-server/skel/init-scripts.sh /lib/systemd/syst
 
 Konfiguration des Web- Interfaces:
 ```
-mkdir /usr/share/sepbackupmonitor-interface
-cp -R /root/software/sepbackupmonitor-server/web/interface/public/* /usr/share/sepbackupmonitor-interface
+mkdir /usr/local/share/sepbackupmonitor-interface
+cp -R /root/software/sepbackupmonitor-server/web/interface/public/* /usr/local/share/sepbackupmonitor-interface
 cp /root/software/sepbackupmonitor-server/web/interface/sepbackupmonitor.conf /etc/apache2/conf-available/sepbackupmonitor.conf
 ln -s /etc/apache2/conf-available/sepbackupmonitor.conf /etc/apache2/conf-enabled/sepbackupmonitor.conf
 
