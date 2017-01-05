@@ -22,7 +22,7 @@ Server Binary und Konfigurations- Datei an den Ziel- Ort kopieren:
 cp /root/software/sepbackupmonitor-server/sepbackupmonitor-server /usr/local/bin/
 mkdir /usr/local/etc/sepbackupmonitor/;
 cp /root/software/sepbackupmonitor-server/skel/server.ini /usr/local/etc/sepbackupmonitor/server.ini
-cp /root/software/sepbackupmonitor-server/skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
+cp /root/software/sepbackupmonitor-server/skel/init-scripts.sh /lib/systemd/system/sepbackupmonitor-server.service
 ```
 
 Konfiguration des Web- Interfaces:
