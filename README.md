@@ -14,22 +14,22 @@ Nun wird der sepbackupmonitor-server vom github ausgecheckt und kompiliert:
 mkdir /root/software
 cd /root/software
 git clone https://github.com/dbgtmaster/sepbackupmonitor-server
-cd sepbackupmonitor-server/
+cd sepbackupmonitor-server
 qmake && make
 ```
 Server Binary und Konfigurations- Datei an den Ziel- Ort kopieren:
 ```
-cp sepbackupmonitor-server /usr/local/bin/
+cp /root/software/sepbackupmonitor-server/sepbackupmonitor-server /usr/local/bin/
 mkdir /usr/local/etc/sepbackupmonitor/;
-cp skel/server.ini /usr/local/etc/sepbackupmonitor/server.ini
-cp skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
+cp /root/software/sepbackupmonitor-server/skel/server.ini /usr/local/etc/sepbackupmonitor/server.ini
+cp /root/software/sepbackupmonitor-server/skel/init-scripts-sh /lib/systemd/system/sepbackupmonitor-server.service
 ```
 
 Konfiguration des Web- Interfaces:
 ```
 mkdir /usr/share/sepbackupmonitor-interface
-cp -R web/interface/public/* /usr/share/sepbackupmonitor-interface
-cp web/interface/sepbackupmonitor.conf /etc/apache2/conf-available/sepbackupmonitor.conf
+cp -R /root/software/sepbackupmonitor-server/web/interface/public/* /usr/share/sepbackupmonitor-interface
+cp /root/software/sepbackupmonitor-server/web/interface/sepbackupmonitor.conf /etc/apache2/conf-available/sepbackupmonitor.conf
 ln -s /etc/apache2/conf-available/sepbackupmonitor.conf /etc/apache2/conf-enabled/sepbackupmonitor.conf
 
 mkdir -p /var/lib/sepbackupmonitor-server/backup-protocols
@@ -42,7 +42,7 @@ sh /usr/local/share/sepbackupmonitor-interface/client/create_source_file.sh
 
 Nun wird das Grund- Schema der Datenbank importiert:
 ```
-cp skel/import.sql /tmp/;
+cp /root/software/sepbackupmonitor-server/web/interface/public/exitskel/import.sql /tmp/;
 chown postgres /tmp/import.sql
 su postgres
 psql
