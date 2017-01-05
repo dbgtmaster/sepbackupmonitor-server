@@ -61,6 +61,8 @@ systemctl enable sepbackupmonitor-server.service
 systemctl start sepbackupmonitor-server.service
 ```
 
+Bitte im Log- File "/var/log/sepbackupmonitor-server.log" überprüfen, ob der Dienst erfolgreich gestartet wurde.
+
 Nun kann der SEPBackupmonitor-Client auf einem PC gestartet werden. Dieser Client dient der Verwaltung der SEP- Server.
 Download: https://github.com/dbgtmaster/sepbackupmonitor-client
 
