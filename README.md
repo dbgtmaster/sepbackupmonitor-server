@@ -3,6 +3,7 @@
 
 Es wird von einener Neuinstallation eines Debian 8 Servers ausgegangen (Minimal- Installation ohne grafischer Oberfläche). Als Systemsprache wurde Englisch gewählt. 
 Desweiteren muss der Server mit einer statischen IP versehen werden.
+Außerdem ist ein funktionierendes LDAP System Vorraussetzung (wird für die Benutzer Authentifizierung benötigt)!
 
 Zum Bauen des sepbackupmonitor-server müssen folgende Pakete installiert werden:
 ```
