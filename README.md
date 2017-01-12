@@ -79,6 +79,7 @@ Und den Benutzer "Administrator" volle Rechte erlauben.
 ```
 /usr/local/bin/sepbackupmonitor-server --fullTcpPermissions Administrator
 ```
+ACHTUNG: Der oben genannte Befehl läuft endlos! Der Befehl wird erst im späteren Verlauf mit STRG+C wieder abgebrochen.
 
 Nun kann man sich mit dem Benutzer "Administator" in den SEPBackupmonitor Client einloggen.
 Sollte ein Login nicht möglich sein, bitte am sepbackupserver die Konfigration überprüfen!
@@ -97,8 +98,10 @@ LDAP Filter 1:
 
 "Benutzer <-> Gruppen Zuordnung testen" klicken und einen Benutzer eingeben, welcher sich in dieser Gruppe befindet. Trifft kein Filter zu, bitte die LDAP Filter Konfiguration nochmals überprüfen.
 
-Nun kann der "sepbackupmonitor-server" auf der Commandline wieder gestoppt werden und via systemctl wieder gestartet:
+Nun kann der "sepbackupmonitor-server" auf der Commandline mit STRG+C wieder gestoppt werden und via systemctl wieder gestartet:
+```
 systemctl start sepbackupmonitor-server
+```
 
 Nun ist der Login mit allen erlaubten Benutzern möglich!
 
