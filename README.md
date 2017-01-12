@@ -79,7 +79,7 @@ Und den Benutzer "Administrator" volle Rechte erlauben.
 ```
 /usr/local/bin/sepbackupmonitor-server --fullTcpPermissions Administrator
 ```
-ACHTUNG: Der oben genannte Befehl läuft endlos! Der Befehl wird erst im späteren Verlauf mit STRG+C wieder abgebrochen.
+**ACHTUNG: Der oben genannte Befehl läuft endlos! Der Befehl wird erst im späteren Verlauf mit STRG+C wieder abgebrochen.**
 
 Nun kann man sich mit dem Benutzer "Administator" in den SEPBackupmonitor Client einloggen.
 Sollte ein Login nicht möglich sein, bitte am sepbackupserver die Konfigration überprüfen!
